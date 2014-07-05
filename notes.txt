@@ -1,0 +1,26 @@
+C0B0 line: edited by 21AF 21FB
+
+21AF and 21FB are part of a procedure starting at 219D called cobo
+cobo calls 22A0 (col) and 2318 (tile). 22A0 happens every column, 2318 only happens every block
+
+The values ff00+E_ are global variables. List of them all across all 3 subroutines:
+read only:
+* ff00+A4 [R:read way too often to be relevant] [W: seems to increase every pixel]
+* (lev_num) ff00+E4 [R:more often than once per block] [W: written to when you complete a level]
+  This the level number (TODO: tabulate its value on each level)
+* (blk_num) ff00+E5 [R:very often] [W: increases once per block]
+  This is the block number
+* ff00+F9 [R:too often to be relevant. wrong] [W: increases once per column, range 40 to 5F]
+
+read & write:
+* ff00+E1
+* ff00+E6
+* ff00+E7
+* ff00+E8
+* ff00+E9
+* ff00+EA
+* ff00+FD
+
+So we know that cobo works out: 4000 + 2*lev_num + 2*blk_num
+in level1 4000 4001 is consulted every block, and the same value 6192 is read every time
+

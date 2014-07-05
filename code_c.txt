@@ -1,0 +1,67 @@
+code:
+
+//1
+(hl) ^= 08
+if( !(hl) ) {
+ (C0AB)++
+}
+
+//2
+// CLEAR C0B0 WITH 2C
+b = 10
+hl = C0B0
+a = 2C
+do {
+ (hl)++ = a
+ b--
+} while(b)
+
+//3
+a = (FFE6)
+if( a ) {
+ h = (FFE7)
+ l = (FFE8)
+a
+ -> 21DF
+}
+
+//4
+// LEVEL start address
+hl = 4000 + 2*(FFE4)
+e = (hl)
+hl++
+d = (hl)
+push de
+pop hl
+
+//5
+// PLUS BLOCK number
+hl += 2*(FFE5)
+a = (hl)
+hl++
+
+//6
+if( a == FF ) {
+ (C0D2)++
+ return
+}
+
+//7
+e = a
+d = (hl)
+hl = de
+
+//7b
+do {
+ a = (hl)
+ (hl)++
+
+ //8
+ if( a == FE ) {
+  ...
+  return
+ }
+ 
+ de = C0B0
+ b = a
+ 

@@ -1,0 +1,319 @@
+cobo:
+ROM0:219D 7E               ld   a,(hl)      #1
+ROM0:219E EE 08            xor  a,08        #
+ROM0:21A0 77               ld   (hl),a      #
+ROM0:21A1 A7               and  a           #
+ROM0:21A2 20 04            jr   nz,21A8     #
+ROM0:21A4 21 AB C0         ld   hl,C0AB     #
+ROM0:21A7 34               inc  (hl)        #
+ROM0:21A8 06 10            ld   b,10        #2
+ROM0:21AA 21 B0 C0         ld   hl,C0B0     #
+ROM0:21AD 3E 2C            ld   a,2C        #
+ROM0:21AF 22               ldi  (hl),a      #
+ROM0:21B0 05               dec  b           #
+ROM0:21B1 20 FC            jr   nz,21AF     #
+ROM0:21B3 F0 E6            ld   a,(ff00+E6) #3
+ROM0:21B5 A7               and  a           #
+ROM0:21B6 28 08            jr   z,21C0      #
+ROM0:21B8 F0 E7            ld   a,(ff00+E7) #
+ROM0:21BA 67               ld   h,a         #
+ROM0:21BB F0 E8            ld   a,(ff00+E8) #
+ROM0:21BD 6F               ld   l,a         #
+ROM0:21BE 18 1F            jr   21DF        #
+ROM0:21C0 21 00 40         ld   hl,4000     #4
+ROM0:21C3 F0 E4            ld   a,(ff00+E4) #
+ROM0:21C5 87               add  a           #
+ROM0:21C6 5F               ld   e,a         #
+ROM0:21C7 16 00            ld   d,00        #
+ROM0:21C9 19               add  hl,de       #
+ROM0:21CA 5E               ld   e,(hl)      #
+ROM0:21CB 23               inc  hl          #
+ROM0:21CC 56               ld   d,(hl)      #
+ROM0:21CD D5               push de          #
+ROM0:21CE E1               pop  hl          #
+ROM0:21CF F0 E5            ld   a,(ff00+E5) #5
+ROM0:21D1 87               add  a           #
+ROM0:21D2 5F               ld   e,a         #
+ROM0:21D3 16 00            ld   d,00        #
+ROM0:21D5 19               add  hl,de       #
+ROM0:21D6 2A               ldi  a,(hl)      #
+ROM0:21D7 FE FF            cp   a,FF        #6
+ROM0:21D9 28 47            jr   z,2222      #
+ROM0:21DB 5F               ld   e,a         #7
+ROM0:21DC 56               ld   d,(hl)      #
+ROM0:21DD D5               push de          #
+ROM0:21DE E1               pop  hl          #
+ROM0:21DF 2A               ldi  a,(hl)      #7b
+ROM0:21E0 FE FE            cp   a,FE        #8
+ROM0:21E2 28 43            jr   z,2227      #
+ROM0:21E4 11 B0 C0         ld   de,C0B0
+ROM0:21E7 47               ld   b,a
+ROM0:21E8 E6 F0            and  a,F0
+ROM0:21EA CB 37            swap a
+ROM0:21EC 83               add  e
+ROM0:21ED 5F               ld   e,a
+ROM0:21EE 78               ld   a,b
+ROM0:21EF E6 0F            and  a,0F
+ROM0:21F1 20 02            jr   nz,21F5
+ROM0:21F3 3E 10            ld   a,10
+ROM0:21F5 47               ld   b,a
+ROM0:21F6 2A               ldi  a,(hl)
+ROM0:21F7 FE FD            cp   a,FD
+ROM0:21F9 28 4A            jr   z,2245
+ROM0:21FB 12               ld   (de),a
+ROM0:21FC FE 70            cp   a,70
+ROM0:21FE 20 05            jr   nz,2205
+ROM0:2200 CD A0 22         call col
+ROM0:2203 18 17            jr   221C
+ROM0:2205 FE 80            cp   a,80
+ROM0:2207 20 05            jr   nz,220E
+ROM0:2209 CD 18 23         call block
+ROM0:220C 18 0E            jr   221C
+ROM0:220E FE 5F            cp   a,5F
+ROM0:2210 20 05            jr   nz,2217
+ROM0:2212 CD 18 23         call block
+ROM0:2215 18 05            jr   221C
+ROM0:2217 FE 81            cp   a,81
+ROM0:2219 CC 18 23         call z,block
+ROM0:221C 1C               inc  e
+ROM0:221D 05               dec  b
+ROM0:221E 20 D6            jr   nz,21F6
+ROM0:2220 18 BD            jr   21DF
+ROM0:2222 21 D2 C0         ld   hl,C0D2 #6
+ROM0:2225 34               inc  (hl)    #
+ROM0:2226 C9               ret          #
+ROM0:2227 7C               ld   a,h           #8
+ROM0:2228 E0 E7            ld   (ff00+E7),a   ..
+ROM0:222A 7D               ld   a,l           ..
+ROM0:222B E0 E8            ld   (ff00+E8),a
+ROM0:222D F0 E6            ld   a,(ff00+E6)
+ROM0:222F 3C               inc  a
+ROM0:2230 FE 14            cp   a,14
+ROM0:2232 20 05            jr   nz,2239
+ROM0:2234 21 E5 FF         ld   hl,FFE5
+ROM0:2237 34               inc  (hl)
+ROM0:2238 AF               xor  a
+ROM0:2239 E0 E6            ld   (ff00+E6),a
+ROM0:223B F0 A4            ld   a,(ff00+A4)
+ROM0:223D EA AA C0         ld   (C0AA),a
+ROM0:2240 3E 01            ld   a,01
+ROM0:2242 E0 EA            ld   (ff00+EA),a
+ROM0:2244 C9               ret  
+ROM0:2245 7E               ld   a,(hl)
+ROM0:2246 12               ld   (de),a
+ROM0:2247 1C               inc  e
+ROM0:2248 05               dec  b
+ROM0:2249 20 FB            jr   nz,2246
+ROM0:224B 23               inc  hl
+ROM0:224C C3 DF 21         jp   21DF
+ROM0:224F F0 EA            ld   a,(ff00+EA)
+ROM0:2251 FE 01            cp   a,01
+ROM0:2253 C0               ret  nz
+ROM0:2254 F0 E9            ld   a,(ff00+E9)
+ROM0:2256 6F               ld   l,a
+ROM0:2257 3C               inc  a
+ROM0:2258 FE 60            cp   a,60
+ROM0:225A 20 02            jr   nz,225E
+ROM0:225C 3E 40            ld   a,40
+ROM0:225E E0 E9            ld   (ff00+E9),a
+ROM0:2260 26 98            ld   h,98
+ROM0:2262 11 B0 C0         ld   de,C0B0
+ROM0:2265 06 10            ld   b,10
+ROM0:2267 E5               push hl
+ROM0:2268 7C               ld   a,h
+ROM0:2269 C6 30            add  a,30
+ROM0:226B 67               ld   h,a
+ROM0:226C 36 00            ld   (hl),00
+ROM0:226E E1               pop  hl
+ROM0:226F 1A               ld   a,(de)
+ROM0:2270 77               ld   (hl),a
+ROM0:2271 FE 70            cp   a,70
+ROM0:2273 20 05            jr   nz,227A
+ROM0:2275 CD F4 22         call 22F4
+ROM0:2278 18 17            jr   2291
+ROM0:227A FE 80            cp   a,80
+ROM0:227C 20 05            jr   nz,2283
+ROM0:227E CD 5A 23         call 235A
+ROM0:2281 18 0E            jr   2291
+ROM0:2283 FE 5F            cp   a,5F
+ROM0:2285 20 05            jr   nz,228C
+ROM0:2287 CD 5A 23         call 235A
+ROM0:228A 18 05            jr   2291
+ROM0:228C FE 81            cp   a,81
+ROM0:228E CC 5A 23         call z,235A
+ROM0:2291 1C               inc  e
+ROM0:2292 D5               push de
+ROM0:2293 11 20 00         ld   de,0020
+ROM0:2296 19               add  hl,de
+ROM0:2297 D1               pop  de
+ROM0:2298 05               dec  b
+ROM0:2299 20 CC            jr   nz,2267
+ROM0:229B 3E 02            ld   a,02
+ROM0:229D E0 EA            ld   (ff00+EA),a
+ROM0:229F C9               ret  
+ROM0:22A0 E5               push hl
+ROM0:22A1 D5               push de
+ROM0:22A2 C5               push bc
+ROM0:22A3 F0 F9            ld   a,(ff00+F9)
+ROM0:22A5 A7               and  a
+ROM0:22A6 20 48            jr   nz,22F0
+ROM0:22A8 F0 FD            ld   a,(ff00+FD)
+ROM0:22AA E0 E1            ld   (ff00+E1),a
+ROM0:22AC 3E 03            ld   a,03
+ROM0:22AE E0 FD            ld   (ff00+FD),a
+ROM0:22B0 EA 00 20         ld   (2000),a
+ROM0:22B3 F0 E4            ld   a,(ff00+E4)
+ROM0:22B5 87               add  a
+ROM0:22B6 5F               ld   e,a
+ROM0:22B7 16 00            ld   d,00
+ROM0:22B9 21 1C 65         ld   hl,651C
+ROM0:22BC 19               add  hl,de
+ROM0:22BD 5E               ld   e,(hl)
+ROM0:22BE 23               inc  hl
+ROM0:22BF 56               ld   d,(hl)
+ROM0:22C0 D5               push de
+ROM0:22C1 E1               pop  hl
+ROM0:22C2 F0 E5            ld   a,(ff00+E5)
+ROM0:22C4 BE               cp   (hl)
+ROM0:22C5 28 0D            jr   z,22D4
+ROM0:22C7 7E               ld   a,(hl)
+ROM0:22C8 FE FF            cp   a,FF
+ROM0:22CA 28 1D            jr   z,22E9
+ROM0:22CC 23               inc  hl
+ROM0:22CD 23               inc  hl
+ROM0:22CE 23               inc  hl
+ROM0:22CF 23               inc  hl
+ROM0:22D0 23               inc  hl
+ROM0:22D1 23               inc  hl
+ROM0:22D2 18 EE            jr   22C2
+ROM0:22D4 F0 E6            ld   a,(ff00+E6)
+ROM0:22D6 23               inc  hl
+ROM0:22D7 BE               cp   (hl)
+ROM0:22D8 20 F3            jr   nz,22CD
+ROM0:22DA 23               inc  hl
+ROM0:22DB 11 F4 FF         ld   de,FFF4
+ROM0:22DE 2A               ldi  a,(hl)
+ROM0:22DF 12               ld   (de),a
+ROM0:22E0 1C               inc  e
+ROM0:22E1 2A               ldi  a,(hl)
+ROM0:22E2 12               ld   (de),a
+ROM0:22E3 1C               inc  e
+ROM0:22E4 2A               ldi  a,(hl)
+ROM0:22E5 12               ld   (de),a
+ROM0:22E6 1C               inc  e
+ROM0:22E7 7E               ld   a,(hl)
+ROM0:22E8 12               ld   (de),a
+ROM0:22E9 F0 E1            ld   a,(ff00+E1)
+ROM0:22EB E0 FD            ld   (ff00+FD),a
+ROM0:22ED EA 00 20         ld   (2000),a
+ROM0:22F0 C1               pop  bc
+ROM0:22F1 D1               pop  de
+ROM0:22F2 E1               pop  hl
+ROM0:22F3 C9               ret  
+
+
+col:
+ROM0:22A0 E5               push hl
+ROM0:22A1 D5               push de
+ROM0:22A2 C5               push bc
+ROM0:22A3 F0 F9            ld   a,(ff00+F9)
+ROM0:22A5 A7               and  a
+ROM0:22A6 20 48            jr   nz,22F0
+ROM0:22A8 F0 FD            ld   a,(ff00+FD)
+ROM0:22AA E0 E1            ld   (ff00+E1),a
+ROM0:22AC 3E 03            ld   a,03
+ROM0:22AE E0 FD            ld   (ff00+FD),a
+ROM0:22B0 EA 00 20         ld   (2000),a
+ROM0:22B3 F0 E4            ld   a,(ff00+E4)
+ROM0:22B5 87               add  a
+ROM0:22B6 5F               ld   e,a
+ROM0:22B7 16 00            ld   d,00
+ROM0:22B9 21 1C 65         ld   hl,651C
+ROM0:22BC 19               add  hl,de
+ROM0:22BD 5E               ld   e,(hl)
+ROM0:22BE 23               inc  hl
+ROM0:22BF 56               ld   d,(hl)
+ROM0:22C0 D5               push de
+ROM0:22C1 E1               pop  hl
+ROM0:22C2 F0 E5            ld   a,(ff00+E5)
+ROM0:22C4 BE               cp   (hl)
+ROM0:22C5 28 0D            jr   z,22D4
+ROM0:22C7 7E               ld   a,(hl)
+ROM0:22C8 FE FF            cp   a,FF
+ROM0:22CA 28 1D            jr   z,22E9
+ROM0:22CC 23               inc  hl
+ROM0:22CD 23               inc  hl
+ROM0:22CE 23               inc  hl
+ROM0:22CF 23               inc  hl
+ROM0:22D0 23               inc  hl
+ROM0:22D1 23               inc  hl
+ROM0:22D2 18 EE            jr   22C2
+ROM0:22D4 F0 E6            ld   a,(ff00+E6)
+ROM0:22D6 23               inc  hl
+ROM0:22D7 BE               cp   (hl)
+ROM0:22D8 20 F3            jr   nz,22CD
+ROM0:22DA 23               inc  hl
+ROM0:22DB 11 F4 FF         ld   de,FFF4
+ROM0:22DE 2A               ldi  a,(hl)
+ROM0:22DF 12               ld   (de),a
+ROM0:22E0 1C               inc  e
+ROM0:22E1 2A               ldi  a,(hl)
+ROM0:22E2 12               ld   (de),a
+ROM0:22E3 1C               inc  e
+ROM0:22E4 2A               ldi  a,(hl)
+ROM0:22E5 12               ld   (de),a
+ROM0:22E6 1C               inc  e
+ROM0:22E7 7E               ld   a,(hl)
+ROM0:22E8 12               ld   (de),a
+ROM0:22E9 F0 E1            ld   a,(ff00+E1)
+ROM0:22EB E0 FD            ld   (ff00+FD),a
+ROM0:22ED EA 00 20         ld   (2000),a
+ROM0:22F0 C1               pop  bc
+ROM0:22F1 D1               pop  de
+ROM0:22F2 E1               pop  hl
+ROM0:22F3 C9               ret  
+
+block:
+ROM0:2318 E5               push hl
+ROM0:2319 D5               push de
+ROM0:231A C5               push bc
+ROM0:231B F0 FD            ld   a,(ff00+FD)
+ROM0:231D E0 E1            ld   (ff00+E1),a
+ROM0:231F 3E 03            ld   a,03
+ROM0:2321 E0 FD            ld   (ff00+FD),a
+ROM0:2323 EA 00 20         ld   (2000),a
+ROM0:2326 F0 E4            ld   a,(ff00+E4)
+ROM0:2328 87               add  a
+ROM0:2329 5F               ld   e,a
+ROM0:232A 16 00            ld   d,00
+ROM0:232C 21 36 65         ld   hl,6536
+ROM0:232F 19               add  hl,de
+ROM0:2330 5E               ld   e,(hl)
+ROM0:2331 23               inc  hl
+ROM0:2332 56               ld   d,(hl)
+ROM0:2333 D5               push de
+ROM0:2334 E1               pop  hl
+ROM0:2335 F0 E5            ld   a,(ff00+E5)
+ROM0:2337 BE               cp   (hl)
+ROM0:2338 28 0A            jr   z,2344
+ROM0:233A 7E               ld   a,(hl)
+ROM0:233B FE FF            cp   a,FF
+ROM0:233D 28 10            jr   z,234F
+ROM0:233F 23               inc  hl
+ROM0:2340 23               inc  hl
+ROM0:2341 23               inc  hl
+ROM0:2342 18 F1            jr   2335
+ROM0:2344 F0 E6            ld   a,(ff00+E6)
+ROM0:2346 23               inc  hl
+ROM0:2347 BE               cp   (hl)
+ROM0:2348 20 F6            jr   nz,2340
+ROM0:234A 23               inc  hl
+ROM0:234B 7E               ld   a,(hl)
+ROM0:234C EA CD C0         ld   (C0CD),a
+ROM0:234F F0 E1            ld   a,(ff00+E1)
+ROM0:2351 E0 FD            ld   (ff00+FD),a
+ROM0:2353 EA 00 20         ld   (2000),a
+ROM0:2356 C1               pop  bc
+ROM0:2357 D1               pop  de
+ROM0:2358 E1               pop  hl
+ROM0:2359 C9               ret  

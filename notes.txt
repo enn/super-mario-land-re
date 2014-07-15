@@ -6,7 +6,7 @@ cobo calls 22A0 (col) and 2318 (tile). 22A0 happens every column, 2318 only happ
 The values ff00+E_ are global variables. List of them all across all 3 subroutines:
 read only:
 * ff00+A4 [R:read way too often to be relevant] [W: seems to increase every pixel]
-* (lev_num) ff00+E4 [R:more often than once per block] [W: written to when you complete a level]
+* (lev_num) ff00+E4 [R:more often than once per block] [W: written to when you complete a level] counts up from zero
   This the level number (TODO: tabulate its value on each level)
 * (blk_num) ff00+E5 [R:very often] [W: increases once per block]
   This is the block number
@@ -21,6 +21,14 @@ read & write:
 * ff00+EA
 * ff00+FD
 
-So we know that cobo works out: 4000 + 2*lev_num + 2*blk_num
+So we know that cobo works out: 4000 + 2*lev_num + 2*blk_num ###### MISTAKE
 in level1 4000 4001 is consulted every block, and the same value 6192 is read every time
+level2 checks 4002 4003: 61B7
+so there is a(ssumed) a pointer table here [4000- ...]. changing the values does transport you to the other levels.
 
+6192 + 2*blk_num
+regarding 6192: It stores it into hl, then de to it
+
+block num seems to start at 3, investigating this brought me back to 0DD2.
+
+wrote a script that looks up through the pointer table for a given level/blocknum

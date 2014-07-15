@@ -27,7 +27,7 @@ a
 
 //4
 // LEVEL start address
-hl = 4000 + 2*(FFE4)
+hl = 4000 + 2*(FFE4:lev_num)
 e = (hl)
 hl++
 d = (hl)
@@ -36,7 +36,7 @@ pop hl
 
 //5
 // PLUS BLOCK number
-hl += 2*(FFE5)
+hl += 2*(FFE5:blk_num)
 a = (hl)
 hl++
 
@@ -62,6 +62,16 @@ do {
   return
  }
  
- de = C0B0
- b = a
- 
+ //9
+ de = C0B0 + (a >> 4)
+ if( !(b & 0F) ) {
+   b = 10
+}
+a = (hl)
+hl++
+if( a == FD ) {
+ // 2245
+ ...
+}
+(de) = a
+

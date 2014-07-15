@@ -1,4 +1,4 @@
-cobo:
+cobo:			       .
 ROM0:219D 7E               ld   a,(hl)      #1
 ROM0:219E EE 08            xor  a,08        #
 ROM0:21A0 77               ld   (hl),a      #
@@ -46,21 +46,21 @@ ROM0:21DE E1               pop  hl          #
 ROM0:21DF 2A               ldi  a,(hl)      #7b
 ROM0:21E0 FE FE            cp   a,FE        #8
 ROM0:21E2 28 43            jr   z,2227      #
-ROM0:21E4 11 B0 C0         ld   de,C0B0
-ROM0:21E7 47               ld   b,a
-ROM0:21E8 E6 F0            and  a,F0
-ROM0:21EA CB 37            swap a
-ROM0:21EC 83               add  e
-ROM0:21ED 5F               ld   e,a
-ROM0:21EE 78               ld   a,b
-ROM0:21EF E6 0F            and  a,0F
-ROM0:21F1 20 02            jr   nz,21F5
-ROM0:21F3 3E 10            ld   a,10
-ROM0:21F5 47               ld   b,a
-ROM0:21F6 2A               ldi  a,(hl)
-ROM0:21F7 FE FD            cp   a,FD
-ROM0:21F9 28 4A            jr   z,2245
-ROM0:21FB 12               ld   (de),a
+ROM0:21E4 11 B0 C0         ld   de,C0B0     #9
+ROM0:21E7 47               ld   b,a         #
+ROM0:21E8 E6 F0            and  a,F0        #
+ROM0:21EA CB 37            swap a	    #
+ROM0:21EC 83               add  e	    #
+ROM0:21ED 5F               ld   e,a	    #
+ROM0:21EE 78               ld   a,b	    #  	
+ROM0:21EF E6 0F            and  a,0F	    #
+ROM0:21F1 20 02            jr   nz,21F5	    # 
+ROM0:21F3 3E 10            ld   a,10	    # 
+ROM0:21F5 47               ld   b,a         #
+ROM0:21F6 2A               ldi  a,(hl)	    #
+ROM0:21F7 FE FD            cp   a,FD	    #
+ROM0:21F9 28 4A            jr   z,2245	    #   
+ROM0:21FB 12               ld   (de),a	    #
 ROM0:21FC FE 70            cp   a,70
 ROM0:21FE 20 05            jr   nz,2205
 ROM0:2200 CD A0 22         call col
@@ -80,12 +80,12 @@ ROM0:221D 05               dec  b
 ROM0:221E 20 D6            jr   nz,21F6
 ROM0:2220 18 BD            jr   21DF
 ROM0:2222 21 D2 C0         ld   hl,C0D2 #6
-ROM0:2225 34               inc  (hl)    #
+ROM0:2225 34               inc  (hl)   .#
 ROM0:2226 C9               ret          #
 ROM0:2227 7C               ld   a,h           #8
-ROM0:2228 E0 E7            ld   (ff00+E7),a   ..
+ROM0:2228 E0 E7            ld   (ff00.E7),a   ..
 ROM0:222A 7D               ld   a,l           ..
-ROM0:222B E0 E8            ld   (ff00+E8),a
+ROM0:222B E0 E8            ld   (ff00+E.),a
 ROM0:222D F0 E6            ld   a,(ff00+E6)
 ROM0:222F 3C               inc  a
 ROM0:2230 FE 14            cp   a,14
@@ -177,7 +177,7 @@ ROM0:22C2 F0 E5            ld   a,(ff00+E5)
 ROM0:22C4 BE               cp   (hl)
 ROM0:22C5 28 0D            jr   z,22D4
 ROM0:22C7 7E               ld   a,(hl)
-ROM0:22C8 FE FF            cp   a,FF
+.OM0:22C8 FE FF            cp   a,FF
 ROM0:22CA 28 1D            jr   z,22E9
 ROM0:22CC 23               inc  hl
 ROM0:22CD 23               inc  hl
@@ -317,3 +317,74 @@ ROM0:2356 C1               pop  bc
 ROM0:2357 D1               pop  de
 ROM0:2358 E1               pop  hl
 ROM0:2359 C9               ret  
+
+-----------------------------------------------
+
+level_init
+
+ROM0:0DD1 FB               ei   
+ROM0:0DD2 3E 03            ld   a,03
+ROM0:0DD4 E0 E5            ld   (ff00+E5),a
+ROM0:0DD6 AF               xor  a
+ROM0:0DD7 EA D2 C0         ld   (C0D2),a
+ROM0:0DDA E0 F9            ld   (ff00+F9),a
+ROM0:0DDC 3E 02            ld   a,02
+ROM0:0DDE E0 B3            ld   (ff00+B3),a
+ROM0:0DE0 CD 39 24         call 2439
+ROM0:0DE3 C9               ret  
+
+(FFE5:blk_num) = 3
+(C0D2) = 0
+(FFE9) = 0
+(FFB3) = 2
+call 2439
+
+
+ROM0:2439 3E 0C            ld   a,0C
+ROM0:243B EA AB C0         ld   (C0AB),a
+ROM0:243E CD 53 24         call 2453
+ROM0:2441 AF               xor  a
+ROM0:2442 EA 07 D0         ld   (D007),a
+ROM0:2445 21 2D 24         ld   hl,242D
+ROM0:2448 F0 E4            ld   a,(ff00+E4)
+ROM0:244A 16 00            ld   d,00
+ROM0:244C 5F               ld   e,a
+ROM0:244D 19               add  hl,de
+ROM0:244E 7E               ld   a,(hl)
+ROM0:244F EA 14 D0         ld   (D014),a
+ROM0:2452 C9               ret  
+
+
+ROM0:2453 21 1A 40         ld   hl,401A
+ROM0:2456 F0 E4            ld   a,(ff00+E4)
+ROM0:2458 07               rlca 
+ROM0:2459 16 00            ld   d,00
+ROM0:245B 5F               ld   e,a
+ROM0:245C 19               add  hl,de
+ROM0:245D 2A               ldi  a,(hl)
+ROM0:245E 5F               ld   e,a
+ROM0:245F 7E               ld   a,(hl)
+ROM0:2460 57               ld   d,a
+ROM0:2461 62               ld   h,d
+ROM0:2462 6B               ld   l,e
+ROM0:2463 FA AB C0         ld   a,(C0AB)
+ROM0:2466 47               ld   b,a
+ROM0:2467 7E               ld   a,(hl)
+ROM0:2468 B8               cp   b
+ROM0:2469 30 05            jr   nc,2470
+ROM0:246B 23               inc  hl
+ROM0:246C 23               inc  hl
+ROM0:246D 23               inc  hl
+ROM0:246E 18 F7            jr   2467
+ROM0:2470 7D               ld   a,l
+ROM0:2471 EA 10 D0         ld   (D010),a
+ROM0:2474 7C               ld   a,h
+ROM0:2475 EA 11 D0         ld   (D011),a
+ROM0:2478 21 00 D1         ld   hl,D100
+ROM0:247B 11 10 00         ld   de,0010
+ROM0:247E 36 FF            ld   (hl),FF
+ROM0:2480 19               add  hl,de
+ROM0:2481 7D               ld   a,l
+ROM0:2482 FE A0            cp   a,A0
+ROM0:2484 C2 7E 24         jp   nz,247E
+ROM0:2487 C9               ret  
